@@ -1,0 +1,325 @@
+/**
+ * ui.css - Interface utilisateur en jeu (HUD)
+ */
+
+#hud {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+}
+
+/* Permettre les clics sur certains éléments */
+#hud > * {
+    pointer-events: auto;
+}
+
+/* Top Left - Info joueur */
+.hud-top-left {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.player-info {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    border-radius: 12px;
+    color: white;
+    min-width: 250px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.player-name {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #f1c40f;
+}
+
+.health-bar {
+    position: relative;
+    width: 100%;
+    height: 25px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.health-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #e74c3c 0%, #c0392b 100%);
+    border-radius: 20px;
+    transition: width 0.3s ease;
+    width: 100%;
+}
+
+.health-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 13px;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.player-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Top Right - Timer et Zone */
+.hud-top-right {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.timer-box,
+.zone-box {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 12px 20px;
+    border-radius: 12px;
+    color: white;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    min-width: 150px;
+}
+
+.timer-label,
+.zone-label {
+    font-size: 12px;
+    opacity: 0.8;
+    margin-bottom: 5px;
+}
+
+.timer-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #3498db;
+}
+
+.zone-status {
+    font-size: 16px;
+    font-weight: 700;
+    color: #27ae60;
+    margin-bottom: 5px;
+}
+
+.zone-status.warning {
+    color: #f39c12;
+}
+
+.zone-status.danger {
+    color: #e74c3c;
+    animation: pulse 1s infinite;
+}
+
+.zone-timer {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Leaderboard */
+.hud-leaderboard {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    min-width: 300px;
+}
+
+.leaderboard-title {
+    color: #f1c40f;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#leaderboardList {
+    color: white;
+}
+
+.leaderboard-entry {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    margin-bottom: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.leaderboard-entry.current-player {
+    background: rgba(241, 196, 15, 0.3);
+    border: 2px solid #f1c40f;
+}
+
+.leaderboard-entry .rank {
+    font-weight: 700;
+    margin-right: 10px;
+}
+
+.leaderboard-entry .name {
+    flex: 1;
+    text-align: left;
+}
+
+.leaderboard-entry .score {
+    font-weight: 600;
+    color: #3498db;
+}
+
+/* Minimap */
+.hud-minimap {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+#minimapCanvas {
+    display: block;
+    border-radius: 8px;
+}
+
+/* Kill Feed */
+#killFeed {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 300px;
+    pointer-events: none;
+}
+
+.kill-message {
+    background: rgba(231, 76, 60, 0.9);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    animation: slideInRight 0.3s ease, fadeOutRight 0.3s ease 2.7s forwards;
+}
+
+.kill-message.player-kill {
+    background: rgba(39, 174, 96, 0.9);
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOutRight {
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Messages de zone */
+.zone-warning {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(231, 76, 60, 0.95);
+    color: white;
+    padding: 30px 50px;
+    border-radius: 15px;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    animation: bounceIn 0.5s ease;
+    pointer-events: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hud-top-left,
+    .hud-top-right {
+        top: 10px;
+    }
+
+    .hud-top-left {
+        left: 10px;
+    }
+
+    .hud-top-right {
+        right: 10px;
+    }
+
+    .player-info {
+        min-width: 200px;
+        padding: 12px;
+    }
+
+    .timer-box,
+    .zone-box {
+        padding: 10px 15px;
+        min-width: 120px;
+    }
+
+    .hud-leaderboard {
+        min-width: 250px;
+        padding: 12px;
+    }
+
+    .hud-minimap {
+        bottom: 10px;
+        right: 10px;
+    }
+
+    #minimapCanvas {
+        width: 120px;
+        height: 120px;
+    }
+
+    #killFeed {
+        right: 10px;
+        max-width: 250px;
+    }
+
+    .kill-message {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+}
