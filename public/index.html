@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu.io - Hub de jeux multijoueurs</title>
+    <link rel="stylesheet" href="shared/css/common.css">
+    <link rel="stylesheet" href="hub/css/hub.css">
+</head>
+<body>
+    <!-- Container principal -->
+    <div class="hub-container">
+        <!-- Header -->
+        <header class="hub-header">
+            <div class="logo">
+                <h1>🎮 JEU.IO</h1>
+                <p class="tagline">Votre plateforme de jeux .io</p>
+            </div>
+            <div class="user-info">
+                <span class="username-display" id="usernameDisplay">Chargement...</span>
+                <button class="btn btn-secondary btn-small" id="logoutBtn">🔄 Nouveau pseudo</button>
+            </div>
+        </header>
+
+        <!-- Section d'accueil -->
+        <section class="welcome-section">
+            <h2>Bienvenue sur Jeu.io !</h2>
+            <p>Jouez gratuitement aux meilleurs jeux .io en ligne</p>
+        </section>
+
+        <!-- Liste des jeux -->
+        <section class="games-section">
+            <h3 class="section-title">🎯 Jeux disponibles</h3>
+            <div class="games-grid" id="gamesList">
+                <!-- Les jeux seront ajoutés dynamiquement -->
+            </div>
+        </section>
+
+        <!-- Stats utilisateur -->
+        <section class="stats-section">
+            <h3 class="section-title">📊 Vos statistiques</h3>
+            <div class="stats-container" id="statsContainer">
+                <p class="text-light">Jouez à des jeux pour voir vos stats ici !</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="hub-footer">
+            <p>&copy; 2024 Jeu.io - Tous droits réservés</p>
+            <p class="text-small text-light">Projet éducatif - Clone de jeux .io populaires</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="shared/js/sso.js"></script>
+    <script src="shared/js/utils.js"></script>
+    <script src="hub/js/auth.js"></script>
+    <script src="hub/js/gameList.js"></script>
+    <script src="hub/js/main.js"></script>
+</body>
+</html>
