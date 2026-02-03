@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pirate.io - Battle Royale</title>
+    <link rel="stylesheet" href="../../shared/css/common.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="css/ui.css">
+</head>
+<body>
+    <!-- Écran de chargement -->
+    <div id="loadingScreen" class="screen active">
+        <div class="loading-content">
+            <h1>🏴‍☠️ PIRATE.IO</h1>
+            <div class="loading-spinner"></div>
+            <p>Chargement du jeu...</p>
+        </div>
+    </div>
+
+    <!-- Menu principal -->
+    <div id="menuScreen" class="screen">
+        <div class="menu-container">
+            <div class="menu-header">
+                <h1>🏴‍☠️ PIRATE.IO</h1>
+                <p class="subtitle">Deviens le roi des pirates !</p>
+            </div>
+
+            <div class="username-editor">
+                <label for="usernameInput">👤 Ton pseudo :</label>
+                <input type="text" id="usernameInput" maxlength="20" placeholder="Entre ton pseudo">
+                <button class="btn btn-secondary btn-small" id="saveUsernameBtn">💾 Sauvegarder</button>
+            </div>
+
+            <div class="menu-stats">
+                <div class="stat-box">
+                    <div class="stat-label">Meilleur Score</div>
+                    <div class="stat-value" id="bestScore">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Parties Jouées</div>
+                    <div class="stat-value" id="gamesPlayed">0</div>
+                </div>
+            </div>
+
+            <div class="menu-controls">
+                <h3>🎮 Contrôles</h3>
+                <div class="controls-grid">
+                    <div class="control-item">
+                        <span class="key">ZQSD</span>
+                        <span>Déplacements</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="key">↑←↓→</span>
+                        <span>Déplacements</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="key">Clic</span>
+                        <span>Attaquer</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="key">Espace</span>
+                        <span>Dash</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-success btn-large pulse" id="playBtn">
+                ⚔️ JOUER MAINTENANT
+            </button>
+
+            <button class="btn btn-secondary" id="backToHubBtn">
+                ⬅️ Retour au Hub
+            </button>
+        </div>
+    </div>
+
+    <!-- Écran de jeu -->
+    <div id="gameScreen" class="screen">
+        <!-- Canvas de jeu -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- HUD (interface en jeu) -->
+        <div id="hud">
+            <!-- Top left - Stats joueur -->
+            <div class="hud-top-left">
+                <div class="player-info">
+                    <div class="player-name" id="playerName">Joueur</div>
+                    <div class="health-bar">
+                        <div class="health-fill" id="healthFill"></div>
+                        <span class="health-text" id="healthText">100/100</span>
+                    </div>
+                    <div class="player-stats">
+                        <span>⚔️ <span id="killCount">0</span> kills</span>
+                        <span>💰 <span id="coinCount">0</span> coins</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top right - Timer et zone -->
+            <div class="hud-top-right">
+                <div class="timer-box">
+                    <div class="timer-label">⏱️ Temps</div>
+                    <div class="timer-value" id="gameTimer">0:00</div>
+                </div>
+                <div class="zone-box">
+                    <div class="zone-label">🌊 Zone</div>
+                    <div class="zone-status" id="zoneStatus">Sécurisée</div>
+                    <div class="zone-timer" id="zoneTimer">--</div>
+                </div>
+            </div>
+
+            <!-- Leaderboard -->
+            <div class="hud-leaderboard">
+                <div class="leaderboard-title">🏆 Top Pirates</div>
+                <div id="leaderboardList"></div>
+            </div>
+
+            <!-- Minimap -->
+            <div class="hud-minimap">
+                <canvas id="minimapCanvas" width="150" height="150"></canvas>
+            </div>
+
+            <!-- Messages de kill -->
+            <div id="killFeed"></div>
+        </div>
+    </div>
+
+    <!-- Écran de game over -->
+    <div id="gameOverScreen" class="screen">
+        <div class="gameover-container">
+            <h1 class="gameover-title" id="gameOverTitle">💀 GAME OVER</h1>
+            
+            <div class="gameover-stats">
+                <div class="gameover-stat">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-info">
+                        <div class="stat-label">Position Finale</div>
+                        <div class="stat-value" id="finalRank">-</div>
+                    </div>
+                </div>
+                <div class="gameover-stat">
+                    <div class="stat-icon">⚔️</div>
+                    <div class="stat-info">
+                        <div class="stat-label">Kills</div>
+                        <div class="stat-value" id="finalKills">0</div>
+                    </div>
+                </div>
+                <div class="gameover-stat">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <div class="stat-label">Coins</div>
+                        <div class="stat-value" id="finalCoins">0</div>
+                    </div>
+                </div>
+                <div class="gameover-stat">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-info">
+                        <div class="stat-label">Temps Survécu</div>
+                        <div class="stat-value" id="finalTime">0:00</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gameover-buttons">
+                <button class="btn btn-success btn-large" id="playAgainBtn">
+                    🔄 REJOUER
+                </button>
+                <button class="btn btn-secondary" id="backToMenuBtn">
+                    📋 Menu Principal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts - Ordre important ! -->
+    <!-- Utilitaires partagés -->
+    <script src="../../shared/js/sso.js"></script>
+    <script src="../../shared/js/utils.js"></script>
+
+    <!-- Core du jeu -->
+    <script src="js/core/InputManager.js"></script>
+    <script src="js/core/Renderer.js"></script>
+    <script src="js/core/Game.js"></script>
+
+    <!-- Entités -->
+    <script src="js/entities/Entity.js"></script>
+    <script src="js/entities/Player.js"></script>
+    <script src="js/entities/Bot.js"></script>
+
+    <!-- Monde -->
+    <script src="js/world/Map.js"></script>
+    <script src="js/world/Island.js"></script>
+    <script src="js/world/SafeZone.js"></script>
+
+    <!-- Combat -->
+    <script src="js/combat/Weapon.js"></script>
+    <script src="js/combat/CombatSystem.js"></script>
+
+    <!-- IA -->
+    <script src="js/ai/BotAI.js"></script>
+
+    <!-- UI -->
+    <script src="js/ui/HUD.js"></script>
+    <script src="js/ui/Leaderboard.js"></script>
+    <script src="js/ui/NameEditor.js"></script>
+
+    <!-- Point d'entrée -->
+    <script src="js/main.js"></script>
+</body>
+</html>
