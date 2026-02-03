@@ -1,0 +1,12 @@
+{
+  "name": "pirate-io",
+  "version": "1.0.0",
+  "description": "Clone de Yohoho.io - Jeu de pirates Battle Royale",
+  "main": "index.js",
+  "scripts": {
+    "start": "echo 'Static site - no server needed'"
+  },
+  "keywords": ["game", "io", "pirate", "yohoho", "battle-royale"],
+  "author": "",
+  "license": "MIT"
+}
